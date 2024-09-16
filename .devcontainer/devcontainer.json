@@ -1,0 +1,12 @@
+{
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot",
+				"ms-python.python",
+				"ms-python.pylint",
+				"ms-vsliveshare.vsliveshare"
+			]
+		}
+	}
+}
