@@ -1,8 +1,8 @@
-# Proyecto Juego -
+# Proyecto Juego - Guess (Adivina un número)
 
 ## Descripción del proyecto
 
-El presente proyecto implementa el Juego 
+El presente proyecto implementa el Juego Guess sobre adivinar un número (frío/caliente)
 
 # Trabajo en Equipo
 
