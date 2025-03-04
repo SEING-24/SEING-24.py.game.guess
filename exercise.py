@@ -2,6 +2,7 @@ import os
 import requests
 import json
 import random
+from openai import OpenAI
 
 # Función que muestra instrucciones al jugador
 def mostrar_instrucciones():
@@ -14,33 +15,34 @@ def mostrar_instrucciones():
 # Función que consulta al modelo de GitHub Models en Azure
 def obtener_pista_creativa(intentos, numero_secreto):
     endpoint = "https://models.inference.ai.azure.com"
-    api_key = os.environ["GITHUB_TOKEN"]  # <- Reemplazar con clave real de Azure
 
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
+    token = os.environ["GITHUB_TOKEN"]
+    endpoint = "https://models.inference.ai.azure.com"
+    model_name = "gpt-4o-mini"
 
-    mensajes = [
-        {"role": "system", "content": "Eres un asistente experto en juegos de adivinanzas."},
-        {"role": "user", "content": f"Estoy jugando a adivinar un número entre 1 y 100. Llevo {intentos} intentos y el número secreto es {numero_secreto}. Sin revelar el número exacto, dame una pista creativa para ayudarme a adivinarlo."}
-    ]
+    client = OpenAI(
+        base_url=endpoint,
+        api_key=token,
+    )
 
-    payload = {
-        "model": "gpt-4o",  # O ajusta según el modelo habilitado en el endpoint
-        "messages": mensajes,
-        "temperature": 0.7
-    }
+    response = client.chat.completions.create(
+        messages=[
+            {
+                "role": "system",
+                "content": "Eres un asistente experto en juegos de adivinanzas.",
+            },
+            {
+                "role": "user",
+                "content": f"Estoy jugando a adivinar un número entre 1 y 100. Llevo {intentos} intentos y el número secreto es {numero_secreto}. Sin revelar el número exacto, dame una pista creativa para ayudarme a adivinarlo.",
+            }
+        ],
+        model=model_name,
+        temperature=1.0,
+        max_tokens=1000,
+        top_p=1.0
+    )
 
-    try:
-        response = requests.post(f"{endpoint}/v1/chat/completions", headers=headers, data=json.dumps(payload))
-        if response.status_code == 200:
-            respuesta = response.json()
-            return respuesta['choices'][0]['message']['content'].strip()
-        else:
-            return f"No se pudo obtener una pista (Código {response.status_code})."
-    except Exception as e:
-        return f"Error al consultar al modelo: {e}"
+    return response.choices[0].message.content
 
 # Función para ejecutar una partida completa
 def jugar_partida():
