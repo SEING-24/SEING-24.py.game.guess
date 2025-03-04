@@ -2,7 +2,19 @@
 
 ## Descripción del proyecto
 
-El presente proyecto implementa el Juego Guess sobre adivinar un número (frío/caliente)
+El presente proyecto implementa el Juego Guess sobre adivinar un número (frío/caliente) usando IA (ChatGPT)
+
+# Instalación de OpenAI
+
+```
+pip install openai
+```
+
+# Ejecución
+
+```
+python exercise.py
+```
 
 # Trabajo en Equipo
 
