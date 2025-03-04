@@ -18,7 +18,7 @@ def obtener_pista_creativa(intentos, numero_secreto):
 
     token = os.environ["GITHUB_TOKEN"]
     endpoint = "https://models.inference.ai.azure.com"
-    model_name = "gpt-4o-mini"
+    model_name = "gpt-4o"
 
     client = OpenAI(
         base_url=endpoint,
